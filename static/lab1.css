@@ -1,0 +1,14 @@
+body {
+    background-color: #00335f; /* Цвет фона */
+    color: #94cbff; /* Цвет текста */
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.oak-image {
+    width: auto; /* Ширина изображения */
+    height: auto; /* Высота зависит от ширины */
+    border: 5px solid #c8e5ff; /* Обводка изображения */
+    border-radius: 10px; /* Скругление углов изображения */
+    margin: 20px; /* Отступы для симпатичного отображения */
+}

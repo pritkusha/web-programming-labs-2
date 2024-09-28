@@ -1,4 +1,4 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, url_for
 app = Flask(__name__)
 
 @app.route("/")
@@ -52,7 +52,8 @@ def lab1():
             программирования Python, использующий набор инструментов
             Werkzeug, а также шаблонизатор Jinja2. Относится к категории так
             называемых микрофреймворков — минималистичных каркасов
-            веб-приложений, сознательно предоставляющих лишь самые базовые возможности.
+            веб-приложений, сознательно предоставляющих лишь самые 
+            базовые возможности.
         </p>
 
         <footer>
@@ -61,3 +62,21 @@ def lab1():
     </body>
 </html>
 """
+
+@app.route("/lab1/oak")
+def oak():
+    return '''
+<!doctype html>
+<html>
+    <head>
+        <title>Дуб</title>
+        <link rel="stylesheet" type="text/css" href="''' + url_for('static', 
+        filename='lab1.css') + '''">
+    </head>
+    <body>
+        <h1>Дуб</h1>
+        <img src="''' + url_for('static', 
+        filename='oak.jpg') + '''" class="oak-image">
+    </body>
+</html>
+'''
