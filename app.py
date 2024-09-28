@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, render_template
 app = Flask(__name__)
 
 @app.route("/")
@@ -160,3 +160,38 @@ def autumn():
     </body>
 </html>
 '''
+
+@app.route("/lab2/a")
+def a():
+    return 'ok'
+
+@app.route("/lab2/a/")
+def a2():
+    return 'ok'
+
+flower_list = ['роза','тюльпан','незабудка','ромашка']
+
+@app.route('/lab2/flowers/<int:flower_id>')
+def flowers(flower_id):
+    if flower_id >= len(flower_list):
+        return 'такого цветка нет', 404
+    else: 
+        return 'цветок: ' + flower_list[flower_id]
+    
+@app.route('/lab2/add_flower/<name>')
+def add_flower(name):
+    flower_list.append(name)
+    return f'''
+<!doctype html>
+<html>
+    <body>
+    <h1>Добавлен новый цветок</h1>
+    <p>Название нового цветка: {name} </p>
+    <p>Всего цветков: {len(flower_list)} </p>
+    <p>Полный список: {flower_list} </p>
+    </body>
+</html>
+'''
+@app.route('/lab2/example')
+def exampler():
+    return render_template('example.html')
