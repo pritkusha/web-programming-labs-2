@@ -36,11 +36,13 @@ def menu():
 
 @app.route("/lab1")
 def lab1():
-    return """
+    return '''
 <!doctype html>
 <html>
     <head>
         <title>Лабораторная работа 1</title>
+        <link rel="stylesheet" type="text/css" href="''' + url_for('static',
+          filename='lab1.css') + '''">
     </head>
     <body>
         <header>
@@ -55,13 +57,22 @@ def lab1():
             веб-приложений, сознательно предоставляющих лишь самые 
             базовые возможности.
         </p>
+        <p><a href="/menu">Меню</a>.</p>
+
+        <h2>Реализованные роуты</h2>
+        <ul>
+            <li><a href="/lab1/oak">Дуб</a></li>
+            <li><a href="/lab1/python">Питон</a></li>
+            <li><a href="/lab1/student">Студент</a></li>
+            <li><a href="/lab1/autumn">Осень</a></li>
+        </ul>
 
         <footer>
             &copy; София Прыткова, ФБИ-24, 3 курс, 2024
         </footer>
     </body>
 </html>
-"""
+'''
 
 @app.route("/lab1/oak")
 def oak():
@@ -77,6 +88,75 @@ def oak():
         <h1>Дуб</h1>
         <img src="''' + url_for('static', 
         filename='oak.jpg') + '''" class="oak-image">
+    </body>
+</html>
+'''
+
+@app.route("/lab1/python")
+def python():
+    return '''
+<!doctype html>
+<html>
+    <head>
+        <title>Язык Python</title>
+        <link rel="stylesheet" type="text/css" href="''' + url_for('static', 
+        filename='lab1.css') + '''">
+    </head>
+    <body>
+        <h1>Python</h1>
+        <p>Python — это высокоуровневый интерпретируемый язык программирования, 
+        который поддерживает множество парадигм программирования, 
+        включая объектно-ориентированное, структурное и функциональное. 
+        Его простота и лаконичность делают его одним из самых популярных 
+        языков для обучения программированию.</p>
+        <p>Python часто используется в различных областях, 
+        таких как веб-разработка, анализ данных, искусственный интеллект, 
+        автоматизация и многое другое. Благодаря огромному количеству библиотек 
+        и активному сообществу, разработчики могут легко находить решения для 
+        различных задач.</p>
+        <img src="''' + url_for('static', 
+        filename='python_programming.jpg') + '''" alt="Программирование 
+        на Python" class="python-image">
+    </body>
+</html>
+'''
+
+@app.route("/lab1/student")
+def student():
+    return '''
+<!doctype html>
+<html>
+    <head>
+        <title>Студент</title>
+        <link rel="stylesheet" type="text/css" href="''' + url_for('static', 
+        filename='lab1.css') + '''">
+    </head>
+    <body>
+        <h1>Студент</h1>
+        <p>Фамилия: Прыткова</p>
+        <p>Имя: София</p>
+        <p>Отчество: Александровна</p>
+        <img src="''' + url_for('static', 
+        filename='ngtu_logo.png') + '''" alt="Лого НГТУ" class="student-logo">
+    </body>
+</html>
+'''
+
+@app.route("/lab1/autumn")
+def autumn():
+    return '''
+<!doctype html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="''' + url_for('static', 
+        filename='lab1.css') + '''">
+    </head>
+    <body>
+        <h1>Осень</h1>
+        <p>Хочется красивую и теплую весну, а не вот это все...</p>
+        <img src="''' + url_for('static', 
+        filename='custom_image.jpg') + '''" alt="Осень" class="custom-image">
     </body>
 </html>
 '''
