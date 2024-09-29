@@ -198,5 +198,4 @@ def exampler():
     lab_number = '2'
     group = 'ФБИ-24'
     course_number = '3'
-    return render_template('example.html', name=name, 
-    lab_number=lab_number, group=group, course_number=course_number)
+    return render_template('example.html')
