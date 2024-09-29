@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, redirect, url_for, render_template, abort
 app = Flask(__name__)
 
 @app.route("/")
@@ -173,13 +173,26 @@ flower_list = ['роза','тюльпан','незабудка','ромашка'
 
 @app.route('/lab2/flowers/<int:flower_id>')
 def flowers(flower_id):
-    if flower_id >= len(flower_list):
+    if flower_id < 0 or flower_id >= len(flower_list):
         return 'такого цветка нет', 404
     else: 
-        return 'цветок: ' + flower_list[flower_id]
-    
+        return f'''
+<!doctype html>
+<html>
+    <body>
+        <h1>Цветок: {flower_list[flower_id]}</h1>
+        <p>ID цветка: {flower_id}</p>
+        <a href="/lab2/flowers/">Показать все цветы</a>
+    </body>
+</html>
+'''
+
+@app.route('/lab2/add_flower/', defaults={'name': None})
 @app.route('/lab2/add_flower/<name>')
 def add_flower(name):
+    if name is None:
+        abort(400, "Вы не задали имя цветка")
+    
     flower_list.append(name)
     return f'''
 <!doctype html>
@@ -192,6 +205,33 @@ def add_flower(name):
     </body>
 </html>
 '''
+
+@app.route('/lab2/flowers/')
+def list_flowers():
+    return f'''
+<!doctype html>
+<html>
+    <body>
+        <h1>Список всех цветов</h1>
+        <p>{', '.join(flower_list)}, Всего: {len(flower_list)}</p>
+        <a href="/lab2/clear_flowers/">Очистить список цветов</a>
+    </body>
+</html>
+'''
+
+@app.route('/lab2/clear_flowers/')
+def clear_flowers():
+    flower_list.clear()
+    return '''
+<!doctype html>
+<html>
+    <body>
+        <h1>Список цветов очищен.</h1>
+        <a href="/lab2/flowers/">Показать все цветы</a>
+    </body>
+</html>
+'''
+
 @app.route('/lab2/example')
 def exampler():
     name,  lab_number, group, course_number = 'София Прыткова', 2, 'ФБИ-24', 3
@@ -209,3 +249,8 @@ def exampler():
 @app.route('/lab2/')
 def lab2():
     return render_template('lab2.html')
+
+@app.route('/lab2/filters')
+def filters():
+    phrase = "О <b>сколько</b> <u>нам</u> <i>открытий</i> чудных..."
+    return render_template('filter.html', phrase = phrase)
