@@ -254,3 +254,55 @@ def lab2():
 def filters():
     phrase = "О <b>сколько</b> <u>нам</u> <i>открытий</i> чудных..."
     return render_template('filter.html', phrase = phrase)
+
+@app.route('/lab2/calc/')
+def default_calc():
+    return redirect(url_for('calc', a=1, b=1))
+
+@app.route('/lab2/calc/<int:a>/')
+def default_b_calc(a):
+    return redirect(url_for('calc', a=a, b=1))
+
+
+@app.route('/lab2/calc/<int:a>/<int:b>')
+def calc(a, b):
+    operations = {
+        'Сложение': f"{a} + {b} = {a + b}",
+        'Вычитание': f"{a} - {b} = {a - b}",
+        'Умножение': f"{a} * {b} = {a * b}",
+        'Деление': f"{a} / {b} = {a / b if b != 0 else 'Ошибка: Деление на ноль'}",
+        'Возведение в степень': f"{a}<sup>{b}</sup> = {a ** b}"
+    }
+    
+    return f'''
+<!doctype html>
+<html>
+    <body>
+        <h1>Результаты вычислений</h1>
+        <p>A = {a}, B = {b}</p>
+        <ul>
+            {"".join(f"<li>{op}: {result}</li>" for op, 
+            result in operations.items())}
+        </ul>
+        <a href="/lab2/calc/">Сбросить</a>
+    </body>
+</html>
+'''
+
+# Список книг
+books = [
+    {'title': 'Война и мир', 'author': 'Лев Толстой', 'genre': 'Эпопея', 'pages': 1225},
+    {'title': 'Анна Каренина', 'author': 'Лев Толстой', 'genre': 'Роман', 'pages': 864},
+    {'title': 'Преступление и наказание', 'author': 'Фёдор Достоевский', 'genre': 'Роман', 'pages': 430},
+    {'title': 'Герой нашего времени', 'author': 'Михаил Лермонтов', 'genre': 'Роман', 'pages': 224},
+    {'title': 'Убить пересмешника', 'author': 'Харпер Ли', 'genre': 'Драма', 'pages': 281},
+    {'title': 'Мастер и Маргарита', 'author': 'Михаил Булгаков', 'genre': 'Фантастика', 'pages': 448},
+    {'title': '451 градус по Фаренгейту', 'author': 'Рэй Брэдбери', 'genre': 'Антиутопия', 'pages': 158},
+    {'title': 'Собачье сердце', 'author': 'Михаил Булгаков', 'genre': 'Сатира', 'pages': 192},
+    {'title': 'Гарри Поттер и философский камень', 'author': 'Дж. К. Роулинг', 'genre': 'Фэнтези', 'pages': 223},
+    {'title': 'На дне', 'author': 'Максим Горький', 'genre': 'Драма', 'pages': 144},
+]
+
+@app.route('/lab2/books')
+def book_list():
+    return render_template('books.html', books=books)
