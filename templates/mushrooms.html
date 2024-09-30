@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список грибов</title>
+    <style>
+        .mushroom {
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            margin: 10px; 
+            display: inline-block; 
+            width: 200px;
+            text-align: center;
+        }
+        img {
+            width: 100%; 
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Список грибов</h1>
+    <div>
+        {% for mushroom in mushrooms %}
+        <div class="mushroom">
+            <img src="{{ mushroom.image }}" alt="{{ mushroom.name }}">
+            <h3>{{ mushroom.name }}</h3>
+            <p>{{ mushroom.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

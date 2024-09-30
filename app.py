@@ -306,3 +306,35 @@ books = [
 @app.route('/lab2/books')
 def book_list():
     return render_template('books.html', books=books)
+
+mushrooms = [
+    {
+        'name': 'Подосиновик',
+        'description': 'Съедобный гриб, растущий в лиственных лесах.',
+        'image': '/static/podosinovik.jpg'  # Обязательно измените на ваше изображение
+    },
+    {
+        'name': 'Боровик',
+        'description': 'Популярный съедобный гриб, также известный как белый гриб.',
+        'image': '/static/borovik.jpg'  # Обязательно измените на ваше изображение
+    },
+    {
+        'name': 'Масленок',
+        'description': 'Съедобный гриб с характерной масляной шляпкой.',
+        'image': '/static/maslenok.jpg'  # Обязательно измените на ваше изображение
+    },
+    {
+        'name': 'Лисичка',
+        'description': 'Съедобный гриб с ярко-желтой окраской.',
+        'image': '/static/lisichka.jpg'  # Обязательно измените на ваше изображение
+    },
+    {
+        'name': 'Шампиньон',
+        'description': 'Одним из самых известных и употребляемых видов грибов.',
+        'image': '/static/shampinjon.jpg'  # Обязательно измените на ваше изображение
+    }
+]
+
+@app.route('/lab2/mushrooms')
+def mushroom_list():
+    return render_template('mushrooms.html', mushrooms=mushrooms)
