@@ -22,3 +22,11 @@ footer {
     left: 0;
     right: 0;
 }
+
+.error {
+    color: #d9534f;
+    padding: 10px; 
+    border-radius: 5px; 
+    margin: 10px 0; 
+    font-family: Arial, sans-serif; 
+}
