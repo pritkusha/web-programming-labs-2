@@ -105,3 +105,47 @@ def settings():
                                          font_size=font_size, 
                                          font_family=font_family))
     return resp
+
+
+@lab3.route("/lab3/train")
+def train():
+    full_name = request.form.get('full_name')
+    shelf_type = request.form.get('shelf_type')
+    with_linen = request.form.get('with_linen')
+    with_luggage = request.form.get('with_luggage')
+    age = request.form.get('age')
+    departure_point = request.form.get('departure_point')
+    destination_point = request.form.get('destination_point')
+    travel_date = request.form.get('travel_date')
+    insurance_needed = request.form.get('insurance_needed')
+    
+    # Проверка на пустые поля
+    if not all([full_name, shelf_type, age, departure_point, destination_point, travel_date]):
+        return render_template('lab3/ticketform.html', error="Все поля должны быть заполнены!")
+
+    # Проверка возраста
+    try:
+        age = int(age)
+        if not (1 <= age <= 120):
+            return render_template('lab3/ticketform.html', error="Возраст должен быть от 1 до 120 лет!")
+    except ValueError:
+        return render_template('lab3/ticketform.html', error="Возраст должен быть числом!")
+
+    # Рассчитываем стоимость
+    ticket_price = 1000 if age >= 18 else 700
+        
+    if shelf_type in ['нижняя', 'нижняя боковая']:
+        ticket_price += 100
+    if with_linen == 'yes':
+        ticket_price += 75
+    if with_luggage == 'yes':
+        ticket_price += 250
+    if insurance_needed == 'yes':
+        ticket_price += 150
+
+    ticket_type = "Детский билет" if age < 18 else "Взрослый билет"
+
+    return render_template('lab3/ticket.html', full_name=full_name, ticket_type=ticket_type, 
+                            ticket_price=ticket_price, departure_point=departure_point,
+                            destination_point=destination_point, travel_date=travel_date)
+

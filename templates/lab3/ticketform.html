@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{#  номер лабораторной работы: #}
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{# основной контент: #}
+{% block main %}
+    <title>Форма билета</title>
+
+    <h1>Форма железнодорожного билета</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+        <label>ФИО пассажира:</label><br>
+        <input type="text" name="full_name" required><br><br>
+
+        <label>Полка:</label><br>
+        <select name="shelf_type" required>
+            <option value="нижняя">Нижняя</option>
+            <option value="верхняя">Верхняя</option>
+            <option value="верхняя боковая">Верхняя боковая</option>
+            <option value="нижняя боковая">Нижняя боковая</option>
+        </select><br><br>
+
+        <label>С бельём:</label><br>
+        <select name="with_linen" required>
+            <option value="yes">Да</option>
+            <option value="no">Нет</option>
+        </select><br><br>
+
+        <label>С багажом:</label><br>
+        <select name="with_luggage" required>
+            <option value="yes">Да</option>
+            <option value="no">Нет</option>
+        </select><br><br>
+
+        <label>Возраст:</label><br>
+        <input type="number" name="age" required><br><br>
+
+        <label>Пункт выезда:</label><br>
+        <input type="text" name="departure_point" required><br><br>
+
+        <label>Пункт назначения:</label><br>
+        <input type="text" name="destination_point" required><br><br>
+
+        <label>Дата поездки:</label><br>
+        <input type="date" name="travel_date" required><br><br>
+
+        <label>Нужна ли страховка:</label><br>
+        <select name="insurance_needed" required>
+            <option value="yes">Да</option>
+            <option value="no">Нет</option>
+        </select><br><br>
+
+        <input type="submit" value="Оформить билет">
+    </form>
+{% endblock %}
