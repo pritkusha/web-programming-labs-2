@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{#  номер лабораторной работы: #}
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{# основной контент: #}
+{% block main %}
+    <h1>Заказ напитка</h1>
+
+    <form action="/lab3/pay">
+        <div>Напиток:</div>
+        <label>
+            <input type="radio" value="cofee" name="drink" checked>кофе <i>(120 рублей)</i>
+        </label>
+        <label>
+            <input type="radio" value="black tea" name="drink">черный чай <i>(80 рублей)</i>
+        </label>
+        <label>
+            <input type="radio" value="green tea" name="drink">зеленый чай <i>(70 рублей)</i>
+        </label>
+
+        <div>Добавки:</div>
+        <label>
+            <input type="checkbox" name="milk">молоко <i>(30 рублей)</i>
+        </label>
+        <label>
+            <input type="checkbox" name="sugar">сахар <i>(10 рублей)</i>
+        </label>
+
+        <div>
+            <button type="submit">Заказать</button>
+        </div>
+    </form>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+{% endblock %}
