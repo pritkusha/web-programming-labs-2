@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{#  номер лабораторной работы: #}
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{# основной контент: #}
+{% block main %}
+    <h1>Cookies</h1>
+    <div>
+        <label class="label" for="color">Выберите цвет текста:</label>
+        <input type="color" id="color" name="color" value="{{ color or ''}}">
+    </div>
+
+    <div>
+        <label class="label" for="background_color">Цвет фона:</label>
+        <input type="color" id="background_color" name="background_color" value="{{ background_color }}">
+    </div>
+    
+    <div>
+        <label class="label" for="font_size">Размер шрифта:</label>
+        <select id="font_size" name="font_size">
+            <option value="12px" {% if font_size == '12px' %}selected{% endif %}>12px</option>
+            <option value="16px" {% if font_size == '16px' %}selected{% endif %}>16px</option>
+            <option value="20px" {% if font_size == '20px' %}selected{% endif %}>20px</option>
+            <option value="24px" {% if font_size == '24px' %}selected{% endif %}>24px</option>
+            <option value="28px" {% if font_size == '28px' %}selected{% endif %}>28px</option>
+        </select>
+    </div>
+
+    <div>
+        <label class="label" for="font_family">Шрифт:</label>
+        <select id="font_family" name="font_family">
+            <option value="Arial" {% if font_family == 'Arial' %}selected{% endif %}>Arial</option>
+            <option value="Georgia" {% if font_family == 'Georgia' %}selected{% endif %}>Georgia</option>
+            <option value="Times New Roman" {% if font_family == 'Times New Roman' %}selected{% endif %}>Times New Roman</option>
+            <option value="Courier New" {% if font_family == 'Courier New' %}selected{% endif %}>Courier New</option>
+        </select>
+    </div>
+
+    <div>
+        <button type="submit">OK</button>
+    </div>
+{% endblock %}

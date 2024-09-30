@@ -47,6 +47,7 @@ def form1():
 def order():
     return render_template('lab3/order.html')
 
+
 @lab3.route('/lab3/pay')
 def pay():
     price = 0
@@ -67,7 +68,39 @@ def pay():
     
     return render_template('lab3/pay.html', price=price)
 
+
 @lab3.route('/lab3/success')
 def success():
     price = request.args.get('price')
     return render_template('lab3/success.html', price=price)
+
+
+@lab3.route('/lab3/settings')
+def settings():
+    color = request.args.get('color')
+    background_color = request.form.get('background_color')
+    font_size = request.form.get('font_size')
+    font_family = request.form.get('font_family')
+    resp = make_response(redirect('lab3/settings'))
+    if color:
+            resp.set_cookie('color', color)
+            return resp
+    if background_color:
+            resp.set_cookie('background_color', background_color)
+            return resp
+    if font_size:
+            resp.set_cookie('font_size', font_size)
+            return resp
+    if font_family:
+            resp.set_cookie('font_family', font_family)
+            return resp
+    
+    color = request.cookies.get('color')
+    background_color = request.cookies.get('background_color')
+    font_size = request.cookies.get('font_size')
+    font_family = request.cookies.get('font_family')
+    resp = make_response(render_template('lab3/settings.html', color=color,
+                                         background_color=background_color, 
+                                         font_size=font_size, 
+                                         font_family=font_family))
+    return resp
