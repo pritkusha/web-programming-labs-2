@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{#  номер лабораторной работы: #}
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{# основной контент: #}
+{% block main %}
+    <h1>Поиск товаров по диапазону цен</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form action="/lab3/search" method="post">
+        <label for="min_price">Мин. цена:</label>
+        <input type="text" name="min_price" id="min_price" value="{{ min_price }}" required>
+        <br>
+        <label for="max_price">Макс. цена:</label>
+        <input type="text" name="max_price" id="max_price" value="{{ max_price }}" required>
+        <br>
+        <button type="submit">Искать</button>
+    </form>
+
+    {% if products %}
+        <h2>Найденные товары:</h2>
+        <ul>
+            {% for product in products %}
+                <li>{{ product.name }} - {{ product.price }} руб. (Бренд: {{ product.brand }}, Цвет: {{ product.color }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нет товаров в заданном диапазоне цен.</p>
+    {% endif %}
+    <a href="/lab3/">Вернуться к списку</a>
+{% endblock %}

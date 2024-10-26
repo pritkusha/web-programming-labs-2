@@ -149,3 +149,67 @@ def train():
                             ticket_price=ticket_price, departure_point=departure_point,
                             destination_point=destination_point, travel_date=travel_date)
 
+
+@lab3.route("/lab3/ticket")
+def ticket():
+    full_name = request.args.get('full_name')
+    ticket_type = request.args.get('ticket_type')
+    ticket_price = request.args.get('ticket_price')
+    departure_point = request.args.get('departure_point')
+    destination_point = request.args.get('destination_point')
+    travel_date = request.args.get('travel_date')
+    return render_template('lab3/ticket.html', full_name=full_name, ticket_type=ticket_type, 
+                            ticket_price=ticket_price, departure_point=departure_point,
+                            destination_point=destination_point, travel_date=travel_date)
+
+
+products = [
+    {"name": "iPhone 7", "price": 30000, "brand": "APPLE", "color": "черный"},
+    {"name": "iPhone 11", "price": 25000, "brand": "APPLE", "color": "белый"},
+    {"name": "iPhone 11 ProMax", "price": 40000, "brand": "APPLE", "color": "синий"},
+    {"name": "iPhone 5", "price": 15000, "brand": "APPLE", "color": "красный"},
+    {"name": "iPhone 7", "price": 22000, "brand": "APPLE", "color": "серый"},
+    {"name": "iPhone 13", "price": 50000, "brand": "APPLE", "color": "зеленый"},
+    {"name": "iPhone 5", "price": 18000, "brand": "APPLE", "color": "черный"},
+    {"name": "iPhone 11", "price": 32000, "brand": "APPLE", "color": "белый"},
+    {"name": "iPhone 14", "price": 60000, "brand": "APPLE", "color": "синий"},
+    {"name": "iPhone 7 mini", "price": 35000, "brand": "APPLE", "color": "красный"},
+    {"name": "iPhone 12", "price": 40000, "brand": "APPLE", "color": "серый"},
+    {"name": "iPhone 14 ProMax", "price": 70000, "brand": "APPLE", "color": "зеленый"},
+    {"name": "iPhone 8", "price": 29000, "brand": "APPLE", "color": "черный"},
+    {"name": "iPhone 4", "price": 15000, "brand": "APPLE", "color": "белый"},
+    {"name": "iPhone 14 ProMax", "price": 80000, "brand": "APPLE", "color": "синий"},
+    {"name": "iPhone X", "price": 22000, "brand": "APPLE", "color": "красный"},
+    {"name": "iPhone 11", "price": 25000, "brand": "APPLE", "color": "серый"},
+    {"name": "iPhone 5", "price": 15000, "brand": "APPLE", "color": "зеленый"},
+    {"name": "iPhone 13", "price": 48000, "brand": "APPLE", "color": "черный"},
+    {"name": "iPhone 12", "price": 38000, "brand": "APPLE", "color": "белый"},
+    {"name": "iPhone 12 mini", "price": 33000, "brand": "APPLE", "color": "синий"},
+]
+
+@lab3.route('/lab3/search')
+def search():
+    min_price = 0
+    max_price = 0
+    error = None
+    filtered_products = []
+
+    if request.method == 'POST':
+        if 'min_price' in request.form and 'max_price' in request.form:
+            min_price = request.form['min_price']
+            max_price = request.form['max_price']
+
+            try:
+                min_price = float(min_price)
+                max_price = float(max_price)
+            except ValueError:
+                return render_template('lab3/search.html', products=[], error="Неверный ввод цен")
+
+            filtered_products = [p for p in products if min_price <= p['price'] <= max_price]
+            return render_template('lab3/index.html', products=filtered_products)
+        
+    return render_template('lab3/search.html', 
+                           max_price=max_price, 
+                           min_price=min_price, 
+                           products=filtered_products,
+                           error=error)

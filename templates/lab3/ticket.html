@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Билет</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{#  номер лабораторной работы: #}
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{# основной контент: #}
+{% block main %}
     <h1>Ваш билет</h1>
     <p><strong>ФИО пассажира:</strong> {{ full_name }}</p>
     <p><strong>Тип билета:</strong> {{ ticket_type }}</p>
@@ -13,5 +12,8 @@
     <p><strong>Пункт выезда:</strong> {{ departure_point }}</p>
     <p><strong>Пункт назначения:</strong> {{ destination_point }}</p>
     <p><strong>Дата поездки:</strong> {{ travel_date }}</p>
-</body>
-</html>
+
+    <div>
+        <a href="/lab3/train">Вернуться к оформлению</a>
+    </div>
+{% endblock %}

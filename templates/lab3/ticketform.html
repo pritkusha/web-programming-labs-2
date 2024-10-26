@@ -11,6 +11,7 @@
     {% if error %}
         <p style="color: red;">{{ error }}</p>
     {% endif %}
+    <form action="/lab3/ticket">
         <label>ФИО пассажира:</label><br>
         <input type="text" name="full_name" required><br><br>
 
@@ -52,6 +53,8 @@
             <option value="no">Нет</option>
         </select><br><br>
 
-        <input type="submit" value="Оформить билет">
+        <div>
+            <button type="submit">Оформить билет</button>
+        </div>
     </form>
 {% endblock %}
