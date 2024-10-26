@@ -100,18 +100,18 @@ def exampler():
         {'name': 'мандарины', 'price': 95},
         {'name': 'манго', 'price': 321},
     ]
-    return render_template('example.html',
+    return render_template('lab2/example.html',
                            name=name, lab_number=lab_number, group=group,
                            course_number=course_number, fruits=fruits)
 
 @lab2.route('/lab2/')
 def lab():
-    return render_template('lab2.html')
+    return render_template('lab2/lab2.html')
 
 @lab2.route('/lab2/filters')
 def filters():
     phrase = "О <b>сколько</b> <u>нам</u> <i>открытий</i> чудных..."
-    return render_template('filter.html', phrase = phrase)
+    return render_template('lab2/filter.html', phrase = phrase)
 
 @lab2.route('/lab2/calc/')
 def default_calc():
@@ -163,36 +163,36 @@ books = [
 
 @lab2.route('/lab2/books')
 def book_list():
-    return render_template('books.html', books=books)
+    return render_template('lab2/books.html', books=books)
 
 mushrooms = [
     {
         'name': 'Подосиновик',
         'description': 'Съедобный гриб, растущий в лиственных лесах.',
-        'image': '/static/podosinovik.jpg'  # Обязательно измените на ваше изображение
+        'image': '/static/lab2/podosinovik.jpg'  # Обязательно измените на ваше изображение
     },
     {
         'name': 'Боровик',
         'description': 'Популярный съедобный гриб, также известный как белый гриб.',
-        'image': '/static/borovik.jpg'  # Обязательно измените на ваше изображение
+        'image': '/static/lab2/borovik.jpg'  # Обязательно измените на ваше изображение
     },
     {
         'name': 'Масленок',
         'description': 'Съедобный гриб с характерной масляной шляпкой.',
-        'image': '/static/maslenok.jpg'  # Обязательно измените на ваше изображение
+        'image': '/static/lab2/maslenok.jpg'  # Обязательно измените на ваше изображение
     },
     {
         'name': 'Лисичка',
         'description': 'Съедобный гриб с ярко-желтой окраской.',
-        'image': '/static/lisichka.jpg'  # Обязательно измените на ваше изображение
+        'image': '/static/lab2/lisichka.jpg'  # Обязательно измените на ваше изображение
     },
     {
         'name': 'Шампиньон',
         'description': 'Одним из самых известных и употребляемых видов грибов.',
-        'image': '/static/shampinjon.jpg'  # Обязательно измените на ваше изображение
+        'image': '/static/lab2/shampinjon.jpg'  # Обязательно измените на ваше изображение
     }
 ]
 
 @lab2.route('/lab2/mushrooms')
 def mushroom_list():
-    return render_template('mushrooms.html', mushrooms=mushrooms)
+    return render_template('lab2/mushrooms.html', mushrooms=mushrooms)

@@ -60,8 +60,8 @@ def oak():
     </head>
     <body>
         <h1>Дуб</h1>
-        <img src="''' + url_for('static', 
-        filename='oak.jpg') + '''" class="oak-image">
+        <img src="''' + url_for('static', filename='lab1/oak.jpg') + '''" class="oak-image">
+
     </body>
 </html>
 '''
@@ -90,7 +90,7 @@ def python():
         и активному сообществу, разработчики могут легко находить решения для 
         различных задач.</p>
         <img src="''' + url_for('static', 
-        filename='python_programming.jpg') + '''" alt="Программирование 
+        filename='lab1/python_programming.jpg') + '''" alt="Программирование 
         на Python" class="python-image">
     </body>
 </html>
@@ -113,7 +113,7 @@ def student():
         <p>Имя: София</p>
         <p>Отчество: Александровна</p>
         <img src="''' + url_for('static', 
-        filename='ngtu_logo.png') + '''" alt="Лого НГТУ" class="student-logo">
+        filename='lab1/ngtu_logo.png') + '''" alt="Лого НГТУ" class="student-logo">
     </body>
 </html>
 '''
@@ -125,7 +125,7 @@ def autumn():
 <!doctype html>
 <html>
     <head>
-        <title></title>
+        <title>Осень</title>
         <link rel="stylesheet" type="text/css" href="''' + url_for('static', 
         filename='lab1.css') + '''">
     </head>
@@ -133,7 +133,7 @@ def autumn():
         <h1>Осень</h1>
         <p>Хочется красивую и теплую весну, а не вот это все...</p>
         <img src="''' + url_for('static', 
-        filename='custom_image.jpg') + '''" alt="Осень" class="custom-image">
+        filename='lab1/custom_image.jpg') + '''" alt="Осень" class="custom-image">
     </body>
 </html>
 '''
