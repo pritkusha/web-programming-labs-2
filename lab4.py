@@ -51,7 +51,7 @@ def sum():
 
 @lab4.route('/lab4/multiply-form')
 def multiply_form():
-    return render_template('lab4/smultiply-form.html')
+    return render_template('lab4/multiply-form.html')
 
 @lab4.route('/lab4/multiply', methods = ['POST'])
 def multiply():
