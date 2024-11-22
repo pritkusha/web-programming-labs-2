@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block lab %}Деление чисел{% endblock %}
+
+{# основной контент: #}
+{% block main %}
+    {% if error %}
+        {{ error }}
+    {% elif error2 %}
+        {{ error2 }}
+    {% else %}
+    <h1>Деление чисел</h1>
+    {{ x1 }} / {{ x2 }} = {{ result }}
+    {% endif %}
+    <a href="/lab4/">Вернуться</a>
+{% endblock %}
