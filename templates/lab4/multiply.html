@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block lab %}Умножение чисел{% endblock %}
+
+{# основной контент: #}
+{% block main %}
+    <h1>Умножение чисел</h1>
+    {{ x1 }} * {{ x2 }} = {{ result }}
+    <a href="/lab4/">Вернуться</a>
+{% endblock %}
