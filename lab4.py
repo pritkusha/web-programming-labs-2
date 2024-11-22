@@ -153,7 +153,7 @@ def login():
     for user in users:
         if login == user['login'] and password == user['password']:
             session['login'] = login
-            return redirect('lab4/login')
+            return redirect('lab4/welcome')
     
     error = 'Неверные логин и/или пароль'
     return render_template('lab4/login.html', error=error, 
@@ -162,4 +162,10 @@ def login():
 @lab4.route('/lab4/logout', methods = ['GET', 'POST'])
 def logout():
     session.pop('login', None)
+    return redirect('/lab4/login')
+
+@lab4.route('/lab4/welcome')
+def welcome():
+    if 'login' in session:
+        return f'Добро пожаловать, {session["login"]}!'
     return redirect('/lab4/login')
