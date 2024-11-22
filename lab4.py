@@ -153,7 +153,7 @@ def login():
     for user in users:
         if login == user['login'] and password == user['password']:
             session['login'] = login
-            return render_template('lab4/login')
+            return redirect('lab4/login')
     
     error = 'Неверные логин и/или пароль'
     return render_template('lab4/login.html', error=error, 
