@@ -135,7 +135,7 @@ users = [
     {'login': 'sofi', 'password': '000', 'name': 'София', 'gender': 'female'}
 ]
 
-@app.route('/lab4/login', methods=['GET', 'POST'])
+@lab4.route('/lab4/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         if 'login' in session:
@@ -172,7 +172,7 @@ def login():
     return render_template('lab4/login.html', error=error, login=login, authorized=False)
 
 
-@app.route('/lab4/logout', methods=['GET', 'POST'])
+@lab4.route('/lab4/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('login', None)
     return redirect('/lab4/login')
