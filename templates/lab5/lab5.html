@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{#  номер лабораторной работы: #}
+{% block lab %}Лабораторная работа 5{% endblock %}
+
+{# основной контент: #}
+{% block main %}
+<div class="header">
+    WEB-программирование, часть 2. {{ block.super }}
+    <br>
+    <a href="/menu">menu</a>
+</div>
+
+<div class="nav-bar">
+    <h1>База знаний</h1>
+    <div class="buttons">
+        <button><a href="{{ url_for('lab5.list_articles') }}">Список статей</a></button>
+            <button><a href="{{ url_for('lab5.create_article') }}">Создать статью</a></button>
+            <button><a href="{{ url_for('lab5.login') }}">Войти</a></button>
+            <button><a href="{{ url_for('lab5.register') }}">Регистрация</a></button>
+    </div>
+    <div>{{ username }}</div>
+</div>
+{% endblock %}
