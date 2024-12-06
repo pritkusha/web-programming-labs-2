@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, session
+import json
+from flask import Blueprint, render_template, request, redirect, session, url_for
 lab4 = Blueprint('lab4' ,__name__)
 
 @lab4.route('/lab4/')
@@ -129,11 +130,41 @@ def tree():
     
     return redirect('/lab4/tree')
 
-users = [
+#users = [
     {'login': 'alex', 'password': '123', 'name': 'Алексей', 'gender': 'male'},
     {'login': 'bob', 'password': '555', 'name': 'Дмитрий', 'gender': 'male'},
     {'login': 'sofi', 'password': '000', 'name': 'София', 'gender': 'female'}
-]
+#]
+
+# Загружаем пользователей из файла или создаём пустой список
+try:
+    with open('users.json', 'r') as f:
+        users = json.load(f)
+except FileNotFoundError:
+    users = []
+
+@lab4.route('/lab4/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        login = request.form.get('login')
+        password = request.form.get('password')
+        name = request.form.get('name')
+        gender = request.form.get('gender')
+
+        if not all([login, password, name]):
+            return render_template('lab4/register.html', error='Все поля обязательны для заполнения')
+
+
+        if any(user['login'] == login for user in users):
+            return render_template('lab4/register.html', error='Пользователь с таким логином уже существует')
+
+        users.append({'login': login, 'password': password, 'name': name, 'gender': gender})
+        with open('users.json', 'w') as f:
+            json.dump(users, f, indent=4)
+
+        return redirect(url_for('login')) # Перенаправляем на страницу входа
+
+    return render_template('lab4/register.html')
 
 @lab4.route('/lab4/login', methods=['GET', 'POST'])
 def login():
@@ -176,6 +207,52 @@ def login():
 def logout():
     session.pop('login', None)
     return redirect('/lab4/login')
+
+
+@lab4.route('/lab4/users')
+def users_list():
+    if 'login' not in session:
+        return redirect(url_for('login'))
+
+    current_user = next((user for user in users if user['login'] == session['login']), None)
+
+    return render_template('lab4/users.html', users=users, current_user=current_user)
+
+@lab4.route('/lab4/delete', methods=['POST'])
+def delete_user():
+    if 'login' not in session:
+        return redirect(url_for('login'))
+
+    login_to_delete = session['login']
+    global users
+    users = [user for user in users if user['login'] != login_to_delete]
+    with open('users.json', 'w') as f:
+        json.dump(users, f, indent=4)
+    session.pop('login', None) #Выход после удаления
+    return redirect(url_for('login'))
+
+
+@lab4.route('/lab4/edit', methods=['POST'])
+def edit_user():
+    if 'login' not in session:
+        return redirect(url_for('login'))
+
+    login_to_edit = session['login']
+    new_name = request.form.get('new_name')
+    new_password = request.form.get('new_password')
+
+    for user in users:
+        if user['login'] == login_to_edit:
+            if new_name:
+                user['name'] = new_name
+            if new_password:
+                user['password'] = new_password
+            break
+
+    with open('users.json', 'w') as f:
+        json.dump(users, f, indent=4)
+
+    return redirect(url_for('users_list'))
 
 
 @lab4.route('/lab4/refrigerator', methods=['GET', 'POST'])
