@@ -210,6 +210,13 @@ def refrigerator():
     return render_template('lab4/refrigerator.html', temperature=temperature, message=message, snowflakes=snowflakes)
 
 
+prices = {
+    'ячмень': 12345,
+    'овёс': 8522,
+    'пшеница': 8722,
+    'рожь': 14111
+}
+
 @lab4.route('/lab4/grain_order', methods=['GET', 'POST'])
 def grain_order():
     grain_type = None
