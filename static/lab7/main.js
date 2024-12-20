@@ -17,29 +17,34 @@ function fillFilmList() {
                 let tr = document.createElement('tr'); // Создаем строку
 
                 // Создаем ячейки для названия, года и действий
-                let tdTitle = document.createElement('td');
+                let tdTitleRus = document.createElement('td');
+                let tdTitleOrig = document.createElement('td');
                 let tdYear = document.createElement('td');
                 let tdActions = document.createElement('td');
 
                 // Заполняем данные
-                tdTitle.innerText = film.title_ru; // Название фильма
+                tdTitleRus.innerText = film.title_ru; // Русское название
+                tdTitleOrig.innerHTML = `<i>(${film.title})</i>`; // Оригинальное название курсивом в скобках
                 tdYear.innerText = film.year; // Год выпуска
 
                 // Создаем кнопки для редактирования и удаления
                 let editButton = document.createElement('button');
                 editButton.innerText = 'Редактировать';
                 editButton.onclick = () => editFilm(index); // Передаем index в функцию editFilm
-                
+                editButton.classList.add('edit-button'); // Добавляем класс для стилизации
+
                 let delButton = document.createElement('button');
                 delButton.innerText = 'Удалить';
                 delButton.onclick = () => deleteFilm(index, films[index].title_ru); // Функция для удаления
+                delButton.classList.add('delete-button'); // Добавляем класс для стилизации
 
                 // Добавляем кнопки в ячейку действий
                 tdActions.append(editButton);
                 tdActions.append(delButton);
 
                 // Добавляем ячейки в строку
-                tr.append(tdTitle);
+                tr.append(tdTitleRus);
+                tr.append(tdTitleOrig);
                 tr.append(tdYear);
                 tr.append(tdActions);
 
