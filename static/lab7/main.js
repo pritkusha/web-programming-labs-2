@@ -97,13 +97,38 @@ function sendFilm() {
     const film = {
         title: document.getElementById('title').value,
         title_ru: document.getElementById('title-ru').value,
-        year: document.getElementById('year').value,
+        year: parseInt(document.getElementById('year').value), // Преобразуем в число
         description: document.getElementById('description').value
+    };
+
+    // Проверки на фронтенде
+    const errors = {};
+
+    // Проверка русского названия
+    if (!film.title_ru) {
+        errors.title_ru = 'Русское название не должно быть пустым';
     }
 
-    // Проверка на пустое описание
+    // Проверка оригинального названия
+    if (!film.title && !film.title_ru) {
+        errors.title = 'Оригинальное название не должно быть пустым, если русское название пустое';
+    }
+
+    // Проверка года
+    if (isNaN(film.year) || film.year < 1895 || film.year > new Date().getFullYear()) {
+        errors.year = `Год должен быть от 1895 до ${new Date().getFullYear()}`;
+    }
+
+    // Проверка описания
     if (!film.description) {
-        document.getElementById('description-error').innerText = 'Заполните описание';
+        errors.description = 'Описание не должно быть пустым';
+    } else if (film.description.length > 2000) {
+        errors.description = 'Описание не должно превышать 2000 символов';
+    }
+
+    // Если есть ошибки, отображаем их
+    if (Object.keys(errors).length > 0) {
+        document.getElementById('description-error').innerText = errors.description || '';
         return;
     }
 
@@ -112,7 +137,7 @@ function sendFilm() {
 
     fetch(url, {
         method: method,
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(film)
     })
     .then(response => {
