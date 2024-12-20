@@ -8,8 +8,11 @@
 {% block main %}
     <h1>Новогодняя открытка</h1>
     <form method="POST">
-        <label for="name">Введите ваше имя:</label>
-        <input type="text" id="name" name="name" required>
+        <label for="gender">Укажите ваш пол:</label>
+        <select id="gender" name="gender" required>
+            <option value="male">Мужской</option>
+            <option value="female">Женский</option>
+        </select>
         <button type="submit">Далее</button>
     </form>
 {% endblock %}

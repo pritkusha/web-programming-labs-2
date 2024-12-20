@@ -8,8 +8,11 @@
 {% block main %}
     <h1>Новогодняя открытка</h1>
     <form method="POST">
-        <label for="name">Введите ваше имя:</label>
-        <input type="text" id="name" name="name" required>
+        <label for="taste">Что вам больше нравится?</label>
+        <select id="taste" name="taste" required>
+            <option value="sweet">Сладкое</option>
+            <option value="hearty">Сытное</option>
+        </select>
         <button type="submit">Далее</button>
     </form>
 {% endblock %}
