@@ -3,7 +3,8 @@ from lab1 import lab1
 from lab2 import lab2
 from lab3 import lab3
 from lab4 import lab4
-from lab4 import lab5
+from lab5 import lab5
+from lab6 import lab6
 
 app = Flask(__name__)
 
@@ -14,6 +15,7 @@ app.register_blueprint(lab2)
 app.register_blueprint(lab3)
 app.register_blueprint(lab4)
 app.register_blueprint(lab5)
+app.register_blueprint(lab6)
 
 @app.route("/")
 @app.route("/index")
@@ -63,3 +65,6 @@ def not_found(e):
 @app.errorhandler(500)
 def internal_error(e):
     return render_template('500.html'), 500  # Укажите ваш шаблон для страницы 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
