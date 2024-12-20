@@ -67,7 +67,9 @@ function deleteFilm(index, title) {
 
 function showModal() {
     document.querySelector('div.modal').style.display = 'block';
+    document.getElementById('description-error').innerText = ''; // Очищаем сообщение об ошибке
 }
+
 function hideModal() {
     document.querySelector('div.modal').style.display = 'none';
 }
@@ -94,7 +96,13 @@ function sendFilm() {
         description: document.getElementById('description').value
     }
 
-    const url = `/lab7/rest-api/films/`;
+    // Проверка на пустое описание
+    if (!film.description) {
+        document.getElementById('description-error').innerText = 'Заполните описание';
+        return;
+    }
+
+    const url = id === '' ? '/lab7/rest-api/films/' : `/lab7/rest-api/films/${id}`;
     const method = id === '' ? 'POST' : 'PUT';
 
     fetch(url, {
@@ -102,9 +110,21 @@ function sendFilm() {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(film)
     })
-    .then(function() {
-        fillFilmList();
-        hideModal();
+    .then(response => {
+        if (response.ok) {
+            fillFilmList();
+            hideModal();
+            return {};
+        }
+        return response.json(); // Если есть ошибка, возвращаем JSON с ошибками
+    })
+    .then(errors => {
+        if (errors.description) {
+            document.getElementById('description-error').innerText = errors.description; // Отображаем ошибку
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка при отправке данных:', error);
     });
 }
 
