@@ -154,31 +154,34 @@
         <button onclick="addFilm()" class="add-button">Добавить фильм</button>
     </div>
 
+    <!-- Модальное окно -->
     <div class="modal">
-        <input type="hidden" id="id">
-        <label>
-            Название фильма на русском:
-            <input type="text" id="title-ru">
-        </label><br>
+        <div class="modal-content">
+            <input type="hidden" id="id">
+            <label>
+                Название фильма на русском:
+                <input type="text" id="title-ru">
+            </label>
 
-        <label>
-            Название фильма на оригинальном языке
-            <i>(если фильм русский, то оставьте пустым):</i>
-            <input type="text" id="title">
-        </label><br>
+            <label>
+                Название фильма на оригинальном языке
+                <i>(если фильм русский, то оставьте пустым):</i>
+                <input type="text" id="title">
+            </label>
 
-        <label>
-            Год выпуска:
-            <input type="number" id="year">
-        </label><br>
+            <label>
+                Год выпуска:
+                <input type="number" id="year">
+            </label>
 
-        <label>
-            Описание:
-            <textarea id="description"></textarea>
-            <div id="description-error" class="error-message"></div>
-        </label><br>
-(
-        <button onclick="sendFilm()">ОК</button>
-        <button onclick="cancel()" class="cancel-button">Отмена</button>
+            <label>
+                Описание:
+                <textarea id="description"></textarea>
+                <div id="description-error" class="error-message"></div>
+            </label>
+
+            <button onclick="sendFilm()">ОК</button>
+            <button onclick="cancel()" class="cancel-button">Отмена</button>
+        </div>
     </div>
 {% endblock %}
