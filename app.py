@@ -17,8 +17,8 @@ app = Flask(__name__)
 
 #app.secret_key = 'секретно-секретный секрет'
 
-#app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'секретно-секретный секрет')
-#app.config['DB_TYPE'] = os.getenv('DB_TYPE', 'postgres')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'секретно-секретный секрет')
+app.config['DB_TYPE'] = os.getenv('DB_TYPE', 'postgres')
 
 #if app.config['DB_TYPE'] == 'postgres':
     #db_name = "sofiya_prytkova_orm"
