@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session
+from flask import Blueprint, render_template, request, session, redirect, url_for
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -82,6 +82,29 @@ def register():
 def list_articles():
     return render_template('lab5/list.html')
 
-@lab5.route('/lab5/create')
-def create_article():
-    return render_template('lab5/create.html')
+@lab5.route('/lab5/create', methods=['GET', 'POST'])
+def create():
+    login = session.get('login')
+    if not login:
+        # Добавляем параметр next с URL страницы создания статьи
+        return redirect(url_for('lab5.login', next=url_for('lab5.create')))
+    
+    if request.method == 'GET':
+        return render_template('lab5/create.html')
+    
+    title = request.form.get('title')
+    article_text = request.form.get('article_text')
+
+    conn, cur = db_connect()
+
+    cur.execute("SELECT id FROM users WHERE login = %s;", (login,))
+    user = cur.fetchone()
+    if not user:
+        db_close(conn, cur)
+        return redirect(url_for('lab5.login', next=url_for('lab5.create')))  
+
+    user_id = user['id']
+    cur.execute("INSERT INTO articles (user_id, title, article_text) VALUES (%s, %s, %s);", (user_id, title, article_text))
+
+    db_close(conn, cur)
+    return redirect(url_for('lab5.list_articles'))  
