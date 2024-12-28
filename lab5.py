@@ -80,7 +80,20 @@ def register():
 
 @lab5.route('/lab5/list')
 def list_articles():
-    return render_template('lab5/list.html')
+    login = session.get('login')
+    if not login: 
+        return redirect('/lab5./login')
+    
+    conn, cur = db_connect()
+
+    cur.execute(f"SELECT id FROM users WHERE login'{login}';")
+    login_id = cur.fetchone()["id"]
+
+    cur.execute(f"SELECT id FROM articles WHERE login_id'{login_id}';")
+    articles = cur.fetchall()
+
+    db_close(conn, cur)
+    return render_template('lab5/list.html', articles=articles)
 
 @lab5.route('/lab5/create', methods=['GET', 'POST'])
 def create():
