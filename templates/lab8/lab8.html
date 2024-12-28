@@ -2,6 +2,7 @@
 
 {#  номер лабораторной работы: #}
 {% block lab %}Лабораторная работа 8{% endblock %}
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -34,7 +35,7 @@
     <h1>База знаний</h1>
     <p>Добро пожаловать, {{ username }}!</p>
     <a href="{{ url_for('lab8.login') }}" class="nav-link">Войти</a>
-    <a href="{{ url_for('lab8.register') }}" class="nav-link">Регистрация</a>
+    <a href="{{ url_for('lab8.register') }}" class="nav-link">Регистрация</a>  <!-- Исправлено имя маршрута -->
     <a href="{{ url_for('lab8.articles') }}" class="nav-link">Список статей</a>
     <a href="{{ url_for('lab8.create') }}" class="nav-link">Создать статью</a>
 </div>
