@@ -48,7 +48,11 @@ def login():
     
     cur, conn = db_connect()
 
-    cur.execute("SELECT * FROM users WHERE login=%s;", (login, ))
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT * FROM users WHERE login=%s;", (login, ))
+    else:
+        cur.execute("SELECT * FROM users WHERE login=?;", (login, ))
+
     user = cur.fetchone()
 
     if not user:
@@ -78,14 +82,22 @@ def register():
     
     cur, conn = db_connect()
 
-    cur.execute("SELECT login FROM users WHERE login=%s;", (login, ))
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT login FROM users WHERE login=%s;", (login, ))
+    else: 
+        cur.execute("SELECT login FROM users WHERE login=?;", (login, ))
+    
     if cur.fetchone():
         db_close(conn, cur)
         return render_template('lab5/register.html',
                                error="Такой пользователь уже существует")
     
     password_hash = generate_password_hash(password)
-    cur.execute("INSERT INTO users (login, password) VALUES (%s, %s);", (login, password_hash))
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("INSERT INTO users (login, password) VALUES (%s, %s);", (login, password_hash))
+    else:
+        cur.execute("INSERT INTO users (login, password) VALUES (?, ?);", (login, password_hash))
+
     db_close(conn, cur)
     return render_template('lab5/succes.html', login=login)
 
@@ -121,14 +133,21 @@ def create():
 
     conn, cur = db_connect()
 
-    cur.execute("SELECT id FROM users WHERE login = %s;", (login,))
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT id FROM users WHERE login = %s;", (login,))
+    else:
+        cur.execute("SELECT id FROM users WHERE login = ?;", (login,))
+
     user = cur.fetchone()
     if not user:
         db_close(conn, cur)
         return redirect(url_for('lab5.login', next=url_for('lab5.create')))  
 
     user_id = user['id']
-    cur.execute("INSERT INTO articles (user_id, title, article_text) VALUES (%s, %s, %s);", (user_id, title, article_text))
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("INSERT INTO articles (user_id, title, article_text) VALUES (%s, %s, %s);", (user_id, title, article_text))
+    else:
+        cur.execute("INSERT INTO articles (user_id, title, article_text) VALUES (?, ?, ?);", (user_id, title, article_text))
 
     db_close(conn, cur)
     return redirect(url_for('lab5.list_articles'))  
