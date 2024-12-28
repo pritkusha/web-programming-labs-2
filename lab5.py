@@ -112,24 +112,26 @@ def register():
 @lab5.route('/lab5/list')
 def list_articles():
     login = session.get('login')
-    if not login:
-        return redirect(url_for('lab5.login'))
-    
     conn, cur = db_connect()
 
     try:
-        cur.execute("SELECT id FROM users WHERE login=?;", (login,))
-        user = cur.fetchone()
-        if not user:
-            db_close(conn, cur)
-            return redirect(url_for('lab5.login'))
+        if login:
+            cur.execute("SELECT id FROM users WHERE login=?;", (login,))
+            user = cur.fetchone()
+            if user:
+                user_id = user['id']
+                cur.execute("SELECT * FROM articles WHERE user_id=? ORDER BY is_favorite DESC, id;", (user_id,))
+                articles = cur.fetchall()
+            else:
+                articles = []
+        else:
+            articles = []
         
-        user_id = user['id']
-        cur.execute("SELECT * FROM articles WHERE user_id=?;", (user_id,))
-        articles = cur.fetchall()
+        cur.execute("SELECT * FROM articles WHERE is_public=1 ORDER BY is_favorite DESC, id;")
+        public_articles = cur.fetchall()
         
         db_close(conn, cur)
-        return render_template('lab5/list.html', articles=articles, login=login)
+        return render_template('lab5/list.html', articles=articles, public_articles=public_articles, login=login)
     except Exception as e:
         db_close(conn, cur)
         return render_template('500.html'), 500
@@ -145,6 +147,8 @@ def create():
     
     title = request.form.get('title').strip()
     article_text = request.form.get('article_text').strip()
+    is_favorite = request.form.get('is_favorite') == 'on'
+    is_public = request.form.get('is_public') == 'on'
 
     if not (title and article_text):
         flash("Тема и текст статьи не могут быть пустыми", "error")
@@ -161,9 +165,9 @@ def create():
         
         user_id = user['id']
         if current_app.config['DB_TYPE'] == 'postgres':
-            cur.execute("INSERT INTO articles (user_id, title, article_text) VALUES (%s, %s, %s);", (user_id, title, article_text))
+            cur.execute("INSERT INTO articles (user_id, title, article_text, is_favorite, is_public) VALUES (%s, %s, %s, %s, %s);", (user_id, title, article_text, is_favorite, is_public))
         else:
-            cur.execute("INSERT INTO articles (user_id, title, article_text) VALUES (?, ?, ?);", (user_id, title, article_text))
+            cur.execute("INSERT INTO articles (user_id, title, article_text, is_favorite, is_public) VALUES (?, ?, ?, ?, ?);", (user_id, title, article_text, is_favorite, is_public))
         
         db_close(conn, cur)
         return redirect(url_for('lab5.list'))
@@ -199,15 +203,17 @@ def edit_article(article_id):
         
         title = request.form.get('title').strip()
         article_text = request.form.get('article_text').strip()
+        is_favorite = request.form.get('is_favorite') == 'on'
+        is_public = request.form.get('is_public') == 'on'
 
         if not (title and article_text):
             flash("Тема и текст статьи не могут быть пустыми", "error")
             return render_template('lab5/edit.html', article=article)
         
         if current_app.config['DB_TYPE'] == 'postgres':
-            cur.execute("UPDATE articles SET title=%s, article_text=%s WHERE id=%s;", (title, article_text, article_id))
+            cur.execute("UPDATE articles SET title=%s, article_text=%s, is_favorite=%s, is_public=%s WHERE id=%s;", (title, article_text, is_favorite, is_public, article_id))
         else:
-            cur.execute("UPDATE articles SET title=?, article_text=? WHERE id=?;", (title, article_text, article_id))
+            cur.execute("UPDATE articles SET title=?, article_text=?, is_favorite=?, is_public=? WHERE id=?;", (title, article_text, is_favorite, is_public, article_id))
         
         db_close(conn, cur)
         return redirect(url_for('lab5.list'))
@@ -234,6 +240,19 @@ def delete_article(article_id):
         cur.execute("DELETE FROM articles WHERE id=? AND user_id=?;", (article_id, user_id))
         db_close(conn, cur)
         return redirect(url_for('lab5.list'))
+    except Exception as e:
+        db_close(conn, cur)
+        return render_template('500.html'), 500
+
+@lab5.route('/lab5/users')
+def list_users():
+    conn, cur = db_connect()
+
+    try:
+        cur.execute("SELECT login FROM users;")
+        users = cur.fetchall()
+        db_close(conn, cur)
+        return render_template('lab5/users.html', users=users)
     except Exception as e:
         db_close(conn, cur)
         return render_template('500.html'), 500
